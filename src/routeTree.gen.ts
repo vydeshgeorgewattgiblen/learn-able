@@ -16,6 +16,7 @@ import { Route as AccessibilityRouteImport } from './routes/accessibility'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VideoVideoIdRouteImport } from './routes/video.$videoId'
 import { Route as SubjectSubjectIdRouteImport } from './routes/subject.$subjectId'
+import { Route as QuizPlaylistIdRouteImport } from './routes/quiz.$playlistId'
 import { Route as PlaylistPlaylistIdRouteImport } from './routes/playlist.$playlistId'
 
 const HomeRoute = HomeRouteImport.update({
@@ -53,6 +54,11 @@ const SubjectSubjectIdRoute = SubjectSubjectIdRouteImport.update({
   path: '/subject/$subjectId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QuizPlaylistIdRoute = QuizPlaylistIdRouteImport.update({
+  id: '/quiz/$playlistId',
+  path: '/quiz/$playlistId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlaylistPlaylistIdRoute = PlaylistPlaylistIdRouteImport.update({
   id: '/playlist/$playlistId',
   path: '/playlist/$playlistId',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/home': typeof HomeRoute
   '/playlist/$playlistId': typeof PlaylistPlaylistIdRoute
+  '/quiz/$playlistId': typeof QuizPlaylistIdRoute
   '/subject/$subjectId': typeof SubjectSubjectIdRoute
   '/video/$videoId': typeof VideoVideoIdRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/home': typeof HomeRoute
   '/playlist/$playlistId': typeof PlaylistPlaylistIdRoute
+  '/quiz/$playlistId': typeof QuizPlaylistIdRoute
   '/subject/$subjectId': typeof SubjectSubjectIdRoute
   '/video/$videoId': typeof VideoVideoIdRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/home': typeof HomeRoute
   '/playlist/$playlistId': typeof PlaylistPlaylistIdRoute
+  '/quiz/$playlistId': typeof QuizPlaylistIdRoute
   '/subject/$subjectId': typeof SubjectSubjectIdRoute
   '/video/$videoId': typeof VideoVideoIdRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/home'
     | '/playlist/$playlistId'
+    | '/quiz/$playlistId'
     | '/subject/$subjectId'
     | '/video/$videoId'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/home'
     | '/playlist/$playlistId'
+    | '/quiz/$playlistId'
     | '/subject/$subjectId'
     | '/video/$videoId'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/home'
     | '/playlist/$playlistId'
+    | '/quiz/$playlistId'
     | '/subject/$subjectId'
     | '/video/$videoId'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   HomeRoute: typeof HomeRoute
   PlaylistPlaylistIdRoute: typeof PlaylistPlaylistIdRoute
+  QuizPlaylistIdRoute: typeof QuizPlaylistIdRoute
   SubjectSubjectIdRoute: typeof SubjectSubjectIdRoute
   VideoVideoIdRoute: typeof VideoVideoIdRoute
 }
@@ -185,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SubjectSubjectIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/quiz/$playlistId': {
+      id: '/quiz/$playlistId'
+      path: '/quiz/$playlistId'
+      fullPath: '/quiz/$playlistId'
+      preLoaderRoute: typeof QuizPlaylistIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/playlist/$playlistId': {
       id: '/playlist/$playlistId'
       path: '/playlist/$playlistId'
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   HomeRoute: HomeRoute,
   PlaylistPlaylistIdRoute: PlaylistPlaylistIdRoute,
+  QuizPlaylistIdRoute: QuizPlaylistIdRoute,
   SubjectSubjectIdRoute: SubjectSubjectIdRoute,
   VideoVideoIdRoute: VideoVideoIdRoute,
 }
