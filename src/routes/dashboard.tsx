@@ -2,7 +2,8 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Trophy } from "lucide-react";
 import { AppShell } from "@/components/learnable/AppShell";
-import { COURSES, getBadges, getScores, getUser, type Badge } from "@/lib/store";
+import { getBadges, getScores, getUser, type Badge } from "@/lib/store";
+import { SUBJECTS } from "@/lib/content";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -28,8 +29,9 @@ function Dashboard() {
     setScores(getScores());
   }, [nav]);
 
+  const allPlaylists = SUBJECTS.flatMap((s) => s.playlists);
   const completed = Object.keys(scores).length;
-  const progress = Math.round((completed / COURSES.length) * 100);
+  const progress = Math.round((completed / allPlaylists.length) * 100);
 
   return (
     <AppShell>
@@ -54,20 +56,26 @@ function Dashboard() {
         </div>
       </div>
 
-      <h2 className="font-display mt-10 text-xl font-semibold">Scores</h2>
-      <div className="mt-4 rounded-3xl bg-card p-2 shadow-card">
-        {COURSES.map((c) => (
-          <Link
-            key={c.id}
-            to="/course/$courseId"
-            params={{ courseId: c.id }}
-            className="flex items-center justify-between rounded-2xl px-4 py-3 hover:bg-secondary"
-          >
-            <span className="font-medium">{c.title}</span>
-            <span className="text-sm text-muted-foreground">{scores[c.quiz.topic] ?? "—"}{scores[c.quiz.topic] != null ? "%" : ""}</span>
-          </Link>
-        ))}
-      </div>
+      {SUBJECTS.map((s) => (
+        <div key={s.id}>
+          <h2 className="font-display mt-10 text-xl font-semibold">{s.title}</h2>
+          <div className="mt-3 rounded-3xl bg-card p-2 shadow-card">
+            {s.playlists.map((p) => (
+              <Link
+                key={p.id}
+                to="/playlist/$playlistId"
+                params={{ playlistId: p.id }}
+                className="flex items-center justify-between rounded-2xl px-4 py-3 hover:bg-secondary"
+              >
+                <span className="font-medium">{p.title}</span>
+                <span className="text-sm text-muted-foreground">
+                  {scores[p.title] != null ? `${scores[p.title]}%` : "—"}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      ))}
 
       <h2 className="font-display mt-10 text-xl font-semibold">Badges</h2>
       {badges.length === 0 ? (

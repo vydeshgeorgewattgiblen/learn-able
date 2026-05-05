@@ -14,10 +14,9 @@ export const Route = createFileRoute("/auth")({
 });
 
 const options: { value: Disability; label: string; desc: string }[] = [
-  { value: "none", label: "None", desc: "Standard experience" },
+  { value: "none", label: "Standard", desc: "Default experience" },
   { value: "blind", label: "Blind / low vision", desc: "Text-to-speech, high contrast" },
   { value: "deaf", label: "Deaf / hard of hearing", desc: "Captions and transcripts" },
-  { value: "learning", label: "Learning support", desc: "Simplified UI" },
 ];
 
 function Auth() {

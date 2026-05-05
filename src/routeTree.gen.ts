@@ -14,8 +14,10 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AccessibilityRouteImport } from './routes/accessibility'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as QuizCourseIdRouteImport } from './routes/quiz.$courseId'
-import { Route as CourseCourseIdRouteImport } from './routes/course.$courseId'
+import { Route as VideoVideoIdRouteImport } from './routes/video.$videoId'
+import { Route as SubjectSubjectIdRouteImport } from './routes/subject.$subjectId'
+import { Route as QuizPlaylistIdRouteImport } from './routes/quiz.$playlistId'
+import { Route as PlaylistPlaylistIdRouteImport } from './routes/playlist.$playlistId'
 
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
@@ -42,14 +44,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const QuizCourseIdRoute = QuizCourseIdRouteImport.update({
-  id: '/quiz/$courseId',
-  path: '/quiz/$courseId',
+const VideoVideoIdRoute = VideoVideoIdRouteImport.update({
+  id: '/video/$videoId',
+  path: '/video/$videoId',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CourseCourseIdRoute = CourseCourseIdRouteImport.update({
-  id: '/course/$courseId',
-  path: '/course/$courseId',
+const SubjectSubjectIdRoute = SubjectSubjectIdRouteImport.update({
+  id: '/subject/$subjectId',
+  path: '/subject/$subjectId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizPlaylistIdRoute = QuizPlaylistIdRouteImport.update({
+  id: '/quiz/$playlistId',
+  path: '/quiz/$playlistId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlaylistPlaylistIdRoute = PlaylistPlaylistIdRouteImport.update({
+  id: '/playlist/$playlistId',
+  path: '/playlist/$playlistId',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -59,8 +71,10 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/home': typeof HomeRoute
-  '/course/$courseId': typeof CourseCourseIdRoute
-  '/quiz/$courseId': typeof QuizCourseIdRoute
+  '/playlist/$playlistId': typeof PlaylistPlaylistIdRoute
+  '/quiz/$playlistId': typeof QuizPlaylistIdRoute
+  '/subject/$subjectId': typeof SubjectSubjectIdRoute
+  '/video/$videoId': typeof VideoVideoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -68,8 +82,10 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/home': typeof HomeRoute
-  '/course/$courseId': typeof CourseCourseIdRoute
-  '/quiz/$courseId': typeof QuizCourseIdRoute
+  '/playlist/$playlistId': typeof PlaylistPlaylistIdRoute
+  '/quiz/$playlistId': typeof QuizPlaylistIdRoute
+  '/subject/$subjectId': typeof SubjectSubjectIdRoute
+  '/video/$videoId': typeof VideoVideoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -78,8 +94,10 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/home': typeof HomeRoute
-  '/course/$courseId': typeof CourseCourseIdRoute
-  '/quiz/$courseId': typeof QuizCourseIdRoute
+  '/playlist/$playlistId': typeof PlaylistPlaylistIdRoute
+  '/quiz/$playlistId': typeof QuizPlaylistIdRoute
+  '/subject/$subjectId': typeof SubjectSubjectIdRoute
+  '/video/$videoId': typeof VideoVideoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -89,8 +107,10 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/home'
-    | '/course/$courseId'
-    | '/quiz/$courseId'
+    | '/playlist/$playlistId'
+    | '/quiz/$playlistId'
+    | '/subject/$subjectId'
+    | '/video/$videoId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -98,8 +118,10 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/home'
-    | '/course/$courseId'
-    | '/quiz/$courseId'
+    | '/playlist/$playlistId'
+    | '/quiz/$playlistId'
+    | '/subject/$subjectId'
+    | '/video/$videoId'
   id:
     | '__root__'
     | '/'
@@ -107,8 +129,10 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/home'
-    | '/course/$courseId'
-    | '/quiz/$courseId'
+    | '/playlist/$playlistId'
+    | '/quiz/$playlistId'
+    | '/subject/$subjectId'
+    | '/video/$videoId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -117,8 +141,10 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DashboardRoute: typeof DashboardRoute
   HomeRoute: typeof HomeRoute
-  CourseCourseIdRoute: typeof CourseCourseIdRoute
-  QuizCourseIdRoute: typeof QuizCourseIdRoute
+  PlaylistPlaylistIdRoute: typeof PlaylistPlaylistIdRoute
+  QuizPlaylistIdRoute: typeof QuizPlaylistIdRoute
+  SubjectSubjectIdRoute: typeof SubjectSubjectIdRoute
+  VideoVideoIdRoute: typeof VideoVideoIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -158,18 +184,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/quiz/$courseId': {
-      id: '/quiz/$courseId'
-      path: '/quiz/$courseId'
-      fullPath: '/quiz/$courseId'
-      preLoaderRoute: typeof QuizCourseIdRouteImport
+    '/video/$videoId': {
+      id: '/video/$videoId'
+      path: '/video/$videoId'
+      fullPath: '/video/$videoId'
+      preLoaderRoute: typeof VideoVideoIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/course/$courseId': {
-      id: '/course/$courseId'
-      path: '/course/$courseId'
-      fullPath: '/course/$courseId'
-      preLoaderRoute: typeof CourseCourseIdRouteImport
+    '/subject/$subjectId': {
+      id: '/subject/$subjectId'
+      path: '/subject/$subjectId'
+      fullPath: '/subject/$subjectId'
+      preLoaderRoute: typeof SubjectSubjectIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz/$playlistId': {
+      id: '/quiz/$playlistId'
+      path: '/quiz/$playlistId'
+      fullPath: '/quiz/$playlistId'
+      preLoaderRoute: typeof QuizPlaylistIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/playlist/$playlistId': {
+      id: '/playlist/$playlistId'
+      path: '/playlist/$playlistId'
+      fullPath: '/playlist/$playlistId'
+      preLoaderRoute: typeof PlaylistPlaylistIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -181,8 +221,10 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   DashboardRoute: DashboardRoute,
   HomeRoute: HomeRoute,
-  CourseCourseIdRoute: CourseCourseIdRoute,
-  QuizCourseIdRoute: QuizCourseIdRoute,
+  PlaylistPlaylistIdRoute: PlaylistPlaylistIdRoute,
+  QuizPlaylistIdRoute: QuizPlaylistIdRoute,
+  SubjectSubjectIdRoute: SubjectSubjectIdRoute,
+  VideoVideoIdRoute: VideoVideoIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

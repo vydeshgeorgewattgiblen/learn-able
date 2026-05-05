@@ -164,7 +164,21 @@
   --muted-foreground: oklch(0.2 0 0);
 }
 .a11y-high-contrast * { font-weight: 600 !important; }
-.a11y-simple .a11y-hide-on-simple { display: none !important; }
-.a11y-simple { font-size: 1.05rem; }
 .a11y-captions .a11y-captions-only { display: block !important; }
 .a11y-captions-only { display: none; }
+
+/* Large captions for deaf users */
+.a11y-captions .caption,
+.a11y-captions [data-caption] {
+  font-size: 22px;
+  font-weight: 700;
+  background: oklch(0 0 0 / 0.85);
+  color: oklch(1 0 0);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  display: inline-block;
+}
+.caption-bar { text-align: center; }
+
+/* Chatbot search glow base */
+.chatbox { transition: box-shadow 0.4s ease; }

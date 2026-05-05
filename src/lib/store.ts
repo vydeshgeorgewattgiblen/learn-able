@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export type Disability = "none" | "blind" | "deaf" | "learning";
+export type Disability = "none" | "blind" | "deaf";
 
 export interface UserState {
   name: string;
@@ -85,16 +85,13 @@ export function saveScore(topic: string, pct: number) {
 export function applyTheme(user: UserState | null) {
   if (typeof document === "undefined") return;
   const root = document.documentElement;
-  root.classList.remove("a11y-high-contrast", "a11y-simple", "a11y-captions", "a11y-tts");
+  root.classList.remove("a11y-high-contrast", "a11y-captions", "a11y-tts");
   if (!user) return;
   if (user.disability === "blind") {
     root.classList.add("a11y-high-contrast", "a11y-tts");
   }
   if (user.disability === "deaf") {
     root.classList.add("a11y-captions");
-  }
-  if (user.disability === "learning") {
-    root.classList.add("a11y-simple");
   }
 }
 
@@ -110,72 +107,4 @@ export function speak(text: string) {
   }
 }
 
-export const COURSES = [
-  {
-    id: "math-basics",
-    title: "Math Basics",
-    lessons: 20,
-    icon: "math",
-    youtube: "NybHckSEQBI",
-    quiz: {
-      topic: "Math Basics",
-      questions: [
-        { question: "What is 12 × 8?", options: ["86", "96", "108", "112"], correct_answer: "96" },
-        { question: "Square root of 144?", options: ["10", "11", "12", "13"], correct_answer: "12" },
-        { question: "Value of π (approx)?", options: ["3.14", "2.71", "1.61", "4.20"], correct_answer: "3.14" },
-        { question: "If 2x = 10, x = ?", options: ["2", "5", "10", "20"], correct_answer: "5" },
-      ],
-    },
-  },
-  {
-    id: "biology-intro",
-    title: "Biology Intro",
-    lessons: 18,
-    icon: "science",
-    youtube: "QnQe0xW_JY4",
-    quiz: {
-      topic: "Biology Intro",
-      questions: [
-        { question: "Powerhouse of the cell?", options: ["Nucleus", "Mitochondria", "Ribosome", "Vacuole"], correct_answer: "Mitochondria" },
-        { question: "Plants make food via?", options: ["Respiration", "Digestion", "Photosynthesis", "Excretion"], correct_answer: "Photosynthesis" },
-        { question: "DNA is found in?", options: ["Cytoplasm", "Cell wall", "Nucleus", "Membrane"], correct_answer: "Nucleus" },
-        { question: "Humans have how many chromosomes?", options: ["23", "44", "46", "48"], correct_answer: "46" },
-      ],
-    },
-  },
-  {
-    id: "chemistry-reactions",
-    title: "Chemistry Reactions",
-    lessons: 16,
-    icon: "science",
-    youtube: "8m6FbFGNlAg",
-    quiz: {
-      topic: "Chemistry Reactions",
-      questions: [
-        { question: "pH of pure water?", options: ["1", "7", "10", "14"], correct_answer: "7" },
-        { question: "Chemical formula of salt?", options: ["NaCl", "KCl", "HCl", "CaCl"], correct_answer: "NaCl" },
-        { question: "Rusting is a?", options: ["Physical change", "Chemical change", "Nuclear change", "None"], correct_answer: "Chemical change" },
-        { question: "Symbol for Gold?", options: ["Go", "Gd", "Au", "Ag"], correct_answer: "Au" },
-      ],
-    },
-  },
-  {
-    id: "english-grammar",
-    title: "English Grammar",
-    lessons: 14,
-    icon: "english",
-    youtube: "dGcsHMXbSOA",
-    quiz: {
-      topic: "English Grammar",
-      questions: [
-        { question: "Plural of 'child'?", options: ["childs", "children", "childes", "child"], correct_answer: "children" },
-        { question: "Past tense of 'go'?", options: ["goed", "gone", "went", "going"], correct_answer: "went" },
-        { question: "Synonym of 'happy'?", options: ["sad", "joyful", "angry", "tired"], correct_answer: "joyful" },
-        { question: "Article before 'hour'?", options: ["a", "an", "the", "no article"], correct_answer: "an" },
-      ],
-    },
-  },
-] as const;
-
-export type Course = (typeof COURSES)[number];
-export const findCourse = (id: string) => COURSES.find((c) => c.id === id);
+// Course/playlist data lives in src/lib/content.ts
