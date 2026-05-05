@@ -77,7 +77,7 @@ function QuizPage() {
           </div>
           <h2 className="font-display mt-6 text-2xl font-bold leading-snug">{q.question}</h2>
           <div className="mt-6 grid gap-3">
-            {q.options.map((o) => (
+            {q.options.map((o: string) => (
               <button
                 key={o}
                 onClick={() => select(o)}
