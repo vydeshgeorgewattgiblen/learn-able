@@ -3,7 +3,7 @@ import science from "@/assets/icon-science.png";
 import english from "@/assets/icon-english.png";
 import video from "@/assets/icon-video.png";
 
-const map: Record<string, string> = { math, science, english, video };
+const map: Record<string, string> = { math, science, english, video, chemistry: science, biology: science };
 
 export function CourseIcon({ name, className = "" }: { name: string; className?: string }) {
   return (
