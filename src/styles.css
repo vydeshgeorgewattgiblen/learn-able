@@ -143,5 +143,28 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
 }
+
+@layer utilities {
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .font-display { font-family: 'Inter', system-ui, sans-serif; letter-spacing: -0.02em; }
+}
+
+/* Accessibility theme overrides */
+.a11y-high-contrast {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0 0 0);
+  --card: oklch(1 0 0);
+  --primary: oklch(0 0 0);
+  --border: oklch(0 0 0);
+  --muted-foreground: oklch(0.2 0 0);
+}
+.a11y-high-contrast * { font-weight: 600 !important; }
+.a11y-simple .a11y-hide-on-simple { display: none !important; }
+.a11y-simple { font-size: 1.05rem; }
+.a11y-captions .a11y-captions-only { display: block !important; }
+.a11y-captions-only { display: none; }
