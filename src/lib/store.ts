@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export type Disability = "none" | "blind" | "deaf" | "learning";
+export type Disability = "none" | "blind" | "deaf";
 
 export interface UserState {
   name: string;
@@ -85,16 +85,13 @@ export function saveScore(topic: string, pct: number) {
 export function applyTheme(user: UserState | null) {
   if (typeof document === "undefined") return;
   const root = document.documentElement;
-  root.classList.remove("a11y-high-contrast", "a11y-simple", "a11y-captions", "a11y-tts");
+  root.classList.remove("a11y-high-contrast", "a11y-captions", "a11y-tts");
   if (!user) return;
   if (user.disability === "blind") {
     root.classList.add("a11y-high-contrast", "a11y-tts");
   }
   if (user.disability === "deaf") {
     root.classList.add("a11y-captions");
-  }
-  if (user.disability === "learning") {
-    root.classList.add("a11y-simple");
   }
 }
 
