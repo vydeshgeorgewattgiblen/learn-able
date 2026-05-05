@@ -217,7 +217,7 @@ function VideoPage() {
           <div className="rounded-3xl bg-card p-6 shadow-card">
             <h3 className="font-display text-base font-semibold">Up next in playlist</h3>
             <ul className="mt-3 space-y-2">
-              {playlist.videos.filter((v) => v.id !== video.id).slice(0, 4).map((v) => (
+              {playlist.videos.filter((v: any) => v.id !== video.id).slice(0, 4).map((v: any) => (
                 <li key={v.id}>
                   <Link
                     to="/video/$videoId"

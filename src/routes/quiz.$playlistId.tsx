@@ -106,7 +106,7 @@ function QuizPage() {
           <p className="mt-1 text-xs text-muted-foreground">Tip: press Ctrl + F1 to read this question aloud.</p>
 
           <div className="mt-6 grid gap-3">
-            {q.options.map((o) => (
+            {q.options.map((o: string) => (
               <button
                 key={o}
                 onClick={() => select(o)}

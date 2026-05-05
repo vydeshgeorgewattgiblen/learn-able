@@ -56,7 +56,7 @@ function PlaylistPage() {
       </div>
 
       <ol className="mt-6 grid gap-3">
-        {p.videos.map((v, i) => (
+        {p.videos.map((v: any, i: number) => (
           <li key={v.id}>
             <Link
               to="/video/$videoId"
