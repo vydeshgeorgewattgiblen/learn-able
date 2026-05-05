@@ -47,7 +47,7 @@ function SubjectPage() {
       </div>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        {s.playlists.map((p) => (
+        {s.playlists.map((p: { id: string; title: string; description: string; videos: unknown[] }) => (
           <Link
             key={p.id}
             to="/playlist/$playlistId"
