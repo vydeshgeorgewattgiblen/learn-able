@@ -14,6 +14,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AccessibilityRouteImport } from './routes/accessibility'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VideoVideoIdRouteImport } from './routes/video.$videoId'
 import { Route as SubjectSubjectIdRouteImport } from './routes/subject.$subjectId'
 import { Route as PlaylistPlaylistIdRouteImport } from './routes/playlist.$playlistId'
 
@@ -42,6 +43,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VideoVideoIdRoute = VideoVideoIdRouteImport.update({
+  id: '/video/$videoId',
+  path: '/video/$videoId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SubjectSubjectIdRoute = SubjectSubjectIdRouteImport.update({
   id: '/subject/$subjectId',
   path: '/subject/$subjectId',
@@ -61,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/home': typeof HomeRoute
   '/playlist/$playlistId': typeof PlaylistPlaylistIdRoute
   '/subject/$subjectId': typeof SubjectSubjectIdRoute
+  '/video/$videoId': typeof VideoVideoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByTo {
   '/home': typeof HomeRoute
   '/playlist/$playlistId': typeof PlaylistPlaylistIdRoute
   '/subject/$subjectId': typeof SubjectSubjectIdRoute
+  '/video/$videoId': typeof VideoVideoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +88,7 @@ export interface FileRoutesById {
   '/home': typeof HomeRoute
   '/playlist/$playlistId': typeof PlaylistPlaylistIdRoute
   '/subject/$subjectId': typeof SubjectSubjectIdRoute
+  '/video/$videoId': typeof VideoVideoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +100,7 @@ export interface FileRouteTypes {
     | '/home'
     | '/playlist/$playlistId'
     | '/subject/$subjectId'
+    | '/video/$videoId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/home'
     | '/playlist/$playlistId'
     | '/subject/$subjectId'
+    | '/video/$videoId'
   id:
     | '__root__'
     | '/'
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
     | '/home'
     | '/playlist/$playlistId'
     | '/subject/$subjectId'
+    | '/video/$videoId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +131,7 @@ export interface RootRouteChildren {
   HomeRoute: typeof HomeRoute
   PlaylistPlaylistIdRoute: typeof PlaylistPlaylistIdRoute
   SubjectSubjectIdRoute: typeof SubjectSubjectIdRoute
+  VideoVideoIdRoute: typeof VideoVideoIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -158,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/video/$videoId': {
+      id: '/video/$videoId'
+      path: '/video/$videoId'
+      fullPath: '/video/$videoId'
+      preLoaderRoute: typeof VideoVideoIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/subject/$subjectId': {
       id: '/subject/$subjectId'
       path: '/subject/$subjectId'
@@ -183,6 +203,7 @@ const rootRouteChildren: RootRouteChildren = {
   HomeRoute: HomeRoute,
   PlaylistPlaylistIdRoute: PlaylistPlaylistIdRoute,
   SubjectSubjectIdRoute: SubjectSubjectIdRoute,
+  VideoVideoIdRoute: VideoVideoIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
