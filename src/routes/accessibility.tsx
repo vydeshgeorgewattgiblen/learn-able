@@ -17,7 +17,6 @@ const opts: { value: Disability; label: string; desc: string }[] = [
   { value: "none", label: "Standard", desc: "Default experience" },
   { value: "blind", label: "Blind / low vision", desc: "Auto text-to-speech and high contrast" },
   { value: "deaf", label: "Deaf / hard of hearing", desc: "Captions on by default, transcripts" },
-  { value: "learning", label: "Learning support", desc: "Simplified UI with less clutter" },
 ];
 
 function AccessibilityPage() {
