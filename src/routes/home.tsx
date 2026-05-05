@@ -1,16 +1,17 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { Mic, Play, Search } from "lucide-react";
+import { Search, Sparkles } from "lucide-react";
 import { AppShell } from "@/components/learnable/AppShell";
 import { CourseIcon } from "@/components/learnable/CourseIcon";
-import { COURSES, getUser, useUser } from "@/lib/store";
+import { getUser, useUser } from "@/lib/store";
+import { SUBJECTS, searchAll } from "@/lib/content";
 
 export const Route = createFileRoute("/home")({
   head: () => ({
     meta: [
-      { title: "Explore courses — Learn Able" },
-      { name: "description", content: "Browse Class 10 courses: Math, Science, English and more." },
+      { title: "Explore subjects — Learn Able" },
+      { name: "description", content: "Browse Class 10 subjects: Mathematics, Biology and Chemistry." },
     ],
   }),
   component: Home,
@@ -21,6 +22,7 @@ function Home() {
   const nav = useNavigate();
   const [q, setQ] = useState("");
   const root = useRef<HTMLDivElement>(null);
+  const chatbox = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined" && !getUser()) nav({ to: "/auth" });
@@ -30,72 +32,91 @@ function Home() {
     const ctx = gsap.context(() => {
       gsap.from(".reveal", { opacity: 0, y: 20, duration: 0.6, stagger: 0.08, ease: "power2.out" });
       gsap.from(".card", { opacity: 0, y: 40, stagger: 0.1, duration: 0.7, ease: "power3.out", delay: 0.15 });
+      if (chatbox.current) {
+        gsap.to(chatbox.current, {
+          boxShadow: "0px 0px 24px rgba(0,0,0,0.25)",
+          repeat: -1,
+          yoyo: true,
+          duration: 1.6,
+          ease: "sine.inOut",
+        });
+      }
     }, root);
     return () => ctx.revert();
   }, []);
 
-  const filtered = COURSES.filter((c) =>
-    c.title.toLowerCase().includes(q.toLowerCase()),
-  );
-  const cont = COURSES[0];
+  const results = searchAll(q);
 
   return (
     <AppShell>
       <div ref={root}>
         <p className="reveal text-sm text-muted-foreground">Hey {user?.name ?? "there"},</p>
-        <h1 className="reveal font-display mt-1 text-3xl font-bold sm:text-4xl">Explore courses</h1>
+        <h1 className="reveal font-display mt-1 text-3xl font-bold sm:text-4xl">Explore subjects</h1>
 
-        <div className="reveal mt-6 flex items-center gap-3 rounded-full bg-card px-5 py-4 shadow-card">
-          <Search className="h-5 w-5 text-muted-foreground" />
-          <input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="Search for..."
-            className="flex-1 bg-transparent text-base outline-none placeholder:text-muted-foreground"
-          />
-          <button aria-label="Voice search" className="text-muted-foreground hover:text-foreground">
-            <Mic className="h-5 w-5" />
-          </button>
+        <div ref={chatbox} className="chatbox reveal mt-6 rounded-3xl bg-card p-2 shadow-card">
+          <div className="flex items-center gap-3 px-4 py-3">
+            <Sparkles className="h-5 w-5 text-muted-foreground" />
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search topics fast..."
+              aria-label="Search topics"
+              className="flex-1 bg-transparent text-base outline-none placeholder:text-muted-foreground"
+            />
+            <Search className="h-5 w-5 text-muted-foreground" />
+          </div>
+          {q && (
+            <div className="border-t border-border/60 p-2">
+              {results.length === 0 ? (
+                <div className="px-3 py-4 text-sm text-muted-foreground">No matches.</div>
+              ) : (
+                <ul className="max-h-72 overflow-y-auto">
+                  {results.map((r) => (
+                    <li key={`${r.type}-${r.id}`}>
+                      {r.type === "playlist" ? (
+                        <Link
+                          to="/playlist/$playlistId"
+                          params={{ playlistId: r.id }}
+                          className="flex items-center justify-between rounded-2xl px-3 py-2 hover:bg-secondary"
+                        >
+                          <span className="font-medium">{r.title}</span>
+                          <span className="text-xs text-muted-foreground">{r.subtitle} · playlist</span>
+                        </Link>
+                      ) : (
+                        <Link
+                          to="/video/$videoId"
+                          params={{ videoId: r.id }}
+                          className="flex items-center justify-between rounded-2xl px-3 py-2 hover:bg-secondary"
+                        >
+                          <span className="font-medium">{r.title}</span>
+                          <span className="text-xs text-muted-foreground">{r.subtitle}</span>
+                        </Link>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
         </div>
 
-        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
-          {filtered.map((c) => (
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {SUBJECTS.map((s) => (
             <Link
-              key={c.id}
-              to="/course/$courseId"
-              params={{ courseId: c.id }}
-              className="card group flex aspect-square flex-col justify-between rounded-3xl bg-card p-5 shadow-card transition-transform hover:-translate-y-1"
+              key={s.id}
+              to="/subject/$subjectId"
+              params={{ subjectId: s.id }}
+              className="card group flex flex-col justify-between gap-6 rounded-3xl bg-card p-6 shadow-card transition-transform hover:-translate-y-1"
             >
-              <CourseIcon name={c.icon} />
+              <CourseIcon name={s.icon} />
               <div>
-                <div className="font-display text-base font-semibold leading-tight">{c.title}</div>
-                <div className="text-xs text-muted-foreground">{c.lessons} lessons</div>
+                <div className="font-display text-lg font-semibold leading-tight">{s.title}</div>
+                <div className="mt-1 text-xs text-muted-foreground">{s.playlists.length} playlists</div>
+                <p className="mt-2 text-sm text-muted-foreground">{s.tagline}</p>
               </div>
             </Link>
           ))}
-          <Link
-            to="/dashboard"
-            className="card flex aspect-square flex-col items-center justify-center rounded-3xl border border-dashed border-border bg-card/50 p-5 text-sm text-muted-foreground hover:bg-card"
-          >
-            View all
-          </Link>
         </div>
-
-        <Link
-          to="/course/$courseId"
-          params={{ courseId: cont.id }}
-          className="card mt-6 flex items-center gap-5 rounded-3xl bg-card p-5 shadow-card transition-transform hover:-translate-y-1"
-        >
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
-            <Play className="h-5 w-5 fill-current" />
-          </div>
-          <div className="flex-1">
-            <div className="text-xs text-muted-foreground">Continue learning</div>
-            <div className="font-display text-base font-semibold">{cont.title}</div>
-            <div className="text-xs text-muted-foreground">Module 1 · Programming Languages</div>
-          </div>
-          <CourseIcon name="video" className="hidden h-12 w-12 sm:block" />
-        </Link>
       </div>
     </AppShell>
   );
